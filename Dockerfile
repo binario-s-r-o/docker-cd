@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 # install prerequisities and set locale
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install --no-install-recommends -y openssl curl unzip locales awscli groff jq && \
+    apt-get install --no-install-recommends -y openssl curl unzip locales awscli groff jq git && \
     rm -rf /var/lib/apt/lists/* && \
     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
     locale-gen
