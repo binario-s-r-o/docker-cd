@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # install prerequisities and set locale
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install --no-install-recommends -y openssl curl unzip locales awscli groff jq git && \
@@ -26,6 +28,11 @@ RUN cd /tmp && \
 RUN cd /tmp && curl -LO https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz && \
     tar -zxvf helm-v2.14.3-linux-amd64.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && \
     chmod +x /usr/local/bin/helm && rm -rf helm-v2.14.3-linux-amd64.tar.gz linux-amd64
+
+# install doctl
+RUN cd /tmp && \
+  curl -LO "https://github.com/digitalocean/doctl/releases/download/v1.33.1/doctl-1.33.1-linux-amd64.tar.gz" && \
+  tar -zxvf doctl-1.33.1-linux-amd64.tar.gz && mv ./doctl /usr/local/bin/doctl && chmod +x /usr/local/bin/doctl
 
 # configuration
 ENV HOME=/tmp/home
