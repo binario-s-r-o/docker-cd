@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -15,19 +15,17 @@ ENV LC_ALL en_US.UTF-8
 
 # install terraform
 RUN cd /tmp && \
-    curl -q "https://releases.hashicorp.com/terraform/0.12.8/terraform_0.12.8_linux_amd64.zip" -o tf.zip && \
+    curl -q "https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip" -o tf.zip && \
     unzip -d . tf.zip && mv ./terraform /usr/local/bin/terraform && chmod +x /usr/local/bin/terraform && \
     rm ./tf.zip
 
 # install kubectl
 RUN cd /tmp && \
-    curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl && \
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.10/bin/linux/amd64/kubectl && \
     mv ./kubectl /usr/local/bin/kubectl && chmod +x /usr/local/bin/kubectl
 
 # install helm
-RUN cd /tmp && curl -LO https://get.helm.sh/helm-v2.14.3-linux-amd64.tar.gz && \
-    tar -zxvf helm-v2.14.3-linux-amd64.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && \
-    chmod +x /usr/local/bin/helm && rm -rf helm-v2.14.3-linux-amd64.tar.gz linux-amd64
+RUN cd /tmp && curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
 # install doctl
 RUN cd /tmp && \
